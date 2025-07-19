@@ -2,7 +2,7 @@
   "name": "@energypatrikhu/docker-publish",
   "private": true,
   "bin": {
-    "docker-publish": "./index.ts"
+    "docker-publish": "./dist/index.js"
   },
   "scripts": {
     "build": "bun run builder.ts",
