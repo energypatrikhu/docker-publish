@@ -88,10 +88,10 @@ if (buildAndPublishConfirm.value === "Yes") {
 
   if (pushChangesConfirm.value === "Yes" && versionUpdateValue !== version) {
     // Push changes to GIT
-    await Bun.$`git add .docker-publish`;
-    await Bun.$`git commit -m "chore: update version to ${versionUpdateValue}"`;
-    await Bun.$`git push`;
-    await Bun.$`git checkout main`;
+    await Bun.$`cd ${workingDirectory} && git add .docker-publish`;
+    await Bun.$`cd ${workingDirectory} && git commit -m "chore: update version to ${versionUpdateValue}"`;
+    await Bun.$`cd ${workingDirectory} && git push`;
+    await Bun.$`cd ${workingDirectory} && git checkout main`;
     console.log("Changes pushed to GIT.");
   }
 } else {
