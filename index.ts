@@ -9,14 +9,14 @@ if (!fs.existsSync(dockerPublishFilePath)) {
   console.log("Initializing .docker-publish file...");
 
   console.log("Enter the Docker image name (e.g., energyhun24/bandwidth-hero-proxy):");
-  const dockerImageName = await Bun.stdin.text();
+  const dockerImageName = prompt("Docker image name: ");
   if (!dockerImageName) {
     console.error("Docker image name is required.");
     process.exit(1);
   }
 
   console.log("Enter the initial version (e.g., 1.0.0):");
-  const initialVersion = await Bun.stdin.text();
+  const initialVersion = prompt("Initial version: ");
   if (!initialVersion) {
     console.error("Initial version is required.");
     process.exit(1);
