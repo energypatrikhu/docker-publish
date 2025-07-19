@@ -1,0 +1,29 @@
+{
+  "name": "@energypatrikhu/docker-publish",
+  "private": true,
+  "bin": {
+    "docker-publish": "./index.ts"
+  },
+  "main": "./index.ts",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "cli-select": "^1.1.2"
+  },
+  "author": "EnergyPatrikHU",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/energypatrikhu/docker-publish.git"
+  },
+  "bugs": {
+    "url": "https://github.com/energypatrikhu/docker-publish/issues"
+  },
+  "homepage": "https://github.com/energypatrikhu/docker-publish",
+  "publishConfig": {
+    "access": "public"
+  }
+}
