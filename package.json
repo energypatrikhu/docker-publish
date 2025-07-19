@@ -2,13 +2,13 @@
   "name": "@energypatrikhu/docker-publish",
   "private": true,
   "bin": {
-    "docker-publish": "./dist/index.js"
+    "docker-publish": "dist/index.js"
   },
   "scripts": {
     "build": "bun run builder.ts",
     "postinstall": "bun run build"
   },
-  "main": "./index.ts",
+  "main": "dist/index.js",
   "devDependencies": {
     "@types/bun": "latest"
   },
