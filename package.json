@@ -4,6 +4,10 @@
   "bin": {
     "docker-publish": "./index.ts"
   },
+  "scripts": {
+    "build": "bun run builder.ts",
+    "postinstall": "bun run build"
+  },
   "main": "./index.ts",
   "devDependencies": {
     "@types/bun": "latest"
