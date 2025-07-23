@@ -1,21 +1,8 @@
 {
   "name": "@energypatrikhu/docker-publish",
   "private": true,
-  "main": "dist/index.js",
   "bin": {
-    "docker-publish": "dist/index.js"
-  },
-  "scripts": {
-    "build": "bun run builder.ts"
-  },
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
-  },
-  "dependencies": {
-    "cli-select": "^1.1.2"
+    "docker-publish": "bin/docker-publish"
   },
   "author": "EnergyPatrikHU",
   "repository": {
