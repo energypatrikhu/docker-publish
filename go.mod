@@ -2,7 +2,10 @@ module github.com/energypatrikhu/docker-publish
 
 go 1.21
 
-require github.com/nexidian/gocliselect v1.0.0
+require (
+	github.com/Masterminds/semver/v3 v3.2.1
+	github.com/nexidian/gocliselect v1.0.0
+)
 
 require (
 	github.com/buger/goterm v1.0.3 // indirect

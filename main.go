@@ -7,9 +7,9 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"strconv"
 	"strings"
 
+	"github.com/Masterminds/semver/v3"
 	"github.com/nexidian/gocliselect"
 )
 
@@ -47,6 +47,18 @@ func main() {
 			os.Exit(1)
 		}
 
+		// Validate semver format
+		if !isValidSemver(initialVersion) {
+			fmt.Fprintf(os.Stderr, "Invalid semantic version format: %s\n", initialVersion)
+			fmt.Fprintf(os.Stderr, "Please use a valid stable semantic version format like:\n")
+			fmt.Fprintf(os.Stderr, "  - 1.0.0\n")
+			fmt.Fprintf(os.Stderr, "  - 2.1.3\n")
+			fmt.Fprintf(os.Stderr, "  - 0.1.0\n")
+			fmt.Fprintf(os.Stderr, "Pre-release versions (alpha, beta, rc) are not supported.\n")
+			fmt.Fprintf(os.Stderr, "See https://semver.org/ for more information.\n")
+			os.Exit(1)
+		}
+
 		config := DockerPublishConfig{
 			DockerImageName: strings.TrimSpace(dockerImageName),
 			Version:         strings.TrimSpace(initialVersion),
@@ -69,6 +81,15 @@ func main() {
 
 	dockerImageName := config.DockerImageName
 	version := config.Version
+
+	// Validate existing version is valid semver
+	if !isValidSemver(version) {
+		fmt.Fprintf(os.Stderr, "Invalid semantic version in config file: %s\n", version)
+		fmt.Fprintf(os.Stderr, "Please fix the version in .docker-publish file to use valid stable semantic versioning.\n")
+		fmt.Fprintf(os.Stderr, "Pre-release versions (alpha, beta, rc) are not supported.\n")
+		fmt.Fprintf(os.Stderr, "See https://semver.org/ for more information.\n")
+		os.Exit(1)
+	}
 
 	// Prepare version update options
 	versionUpdateValues := VersionUpdateValues{
@@ -237,33 +258,35 @@ func writeConfigFile(filepath string, config DockerPublishConfig) error {
 	return os.WriteFile(filepath, data, 0644)
 }
 
+func isValidSemver(version string) bool {
+	v, err := semver.NewVersion(version)
+	if err != nil {
+		return false
+	}
+	// Only allow stable versions (no pre-release)
+	return v.Prerelease() == ""
+}
+
 func updateVersion(version string, versionType string) string {
-	parts := strings.Split(version, ".")
-	if len(parts) != 3 {
+	v, err := semver.NewVersion(version)
+	if err != nil {
 		fmt.Fprintf(os.Stderr, "Invalid version format: %s\n", version)
 		os.Exit(1)
 	}
 
-	major, _ := strconv.Atoi(parts[0])
-	minor, _ := strconv.Atoi(parts[1])
-	patch, _ := strconv.Atoi(parts[2])
-
 	switch versionType {
 	case "Major":
-		major++
-		minor = 0
-		patch = 0
+		return v.IncMajor().String()
 	case "Minor":
-		minor++
-		patch = 0
+		return v.IncMinor().String()
 	case "Patch":
-		patch++
+		return v.IncPatch().String()
 	default:
 		fmt.Fprintf(os.Stderr, "Invalid version type: %s\n", versionType)
 		os.Exit(1)
 	}
 
-	return fmt.Sprintf("%d.%d.%d", major, minor, patch)
+	return ""
 }
 
 func runCommand(name string, args ...string) error {
