@@ -55,7 +55,7 @@ const versionUpdate = await cliSelect({
 const versionUpdateValue = versionUpdateValues[versionUpdate.value];
 
 console.log(`You selected: ${versionUpdateValue}, current version: ${version}`);
-console.log("Do you want to build, publish the image and update the version in the .version file?");
+console.log("Do you want to build, publish the image and update the version in the .docker-publish file?");
 const buildAndPublishConfirm = await cliSelect({
   values: ["Yes", "No"],
   valueRenderer: (value) => {
