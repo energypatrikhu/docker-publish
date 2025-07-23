@@ -19,12 +19,8 @@ A command-line tool for managing Docker image versioning and publishing, convert
 npm install -g git+https://github.com/energypatrikhu/docker-publish.git
 
 # Or if published to npm
-npm install -g @energypatrikhu/docker-publish
+npm install -g energypatrikhu/docker-publish
 ```
-
-**Requirements for npm installation:**
-- Node.js 14 or later
-- Go 1.21 or later (for building the binary)
 
 ### Option 2: Build from source
 
