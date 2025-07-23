@@ -64,14 +64,18 @@ const buildAndPublishConfirm = await cliSelect({
   cleanup: true,
 });
 
-console.log("Do you want to push the changes to GIT?");
-const pushChangesConfirm = await cliSelect({
-  values: ["Yes", "No"],
-  valueRenderer: (value) => {
-    return value;
-  },
-  cleanup: true,
-});
+let pushChangesToGit = false;
+if (fs.existsSync(path.join(workingDirectory, ".git")) && versionUpdateValue !== version) {
+  console.log("Do you want to push the changes to GIT?");
+  const pushChangesConfirm = await cliSelect({
+    values: ["Yes", "No"],
+    valueRenderer: (value) => {
+      return value;
+    },
+    cleanup: true,
+  });
+  pushChangesToGit = pushChangesConfirm.value === "Yes";
+}
 
 if (buildAndPublishConfirm.value === "Yes") {
   // Update the version in package.json
@@ -86,7 +90,7 @@ if (buildAndPublishConfirm.value === "Yes") {
   await Bun.$`docker push ${dockerImageName}:${versionUpdateValue}`;
   await Bun.$`docker push ${dockerImageName}:latest`;
 
-  if (pushChangesConfirm.value === "Yes" && versionUpdateValue !== version) {
+  if (pushChangesToGit) {
     // Push changes to GIT
     await Bun.$`cd ${workingDirectory} && git add .docker-publish`;
     await Bun.$`cd ${workingDirectory} && git commit -m "chore: update version to ${versionUpdateValue}"`;
