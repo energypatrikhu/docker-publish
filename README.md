@@ -1,6 +1,6 @@
-# Docker Publish (Go Version)
+# Docker Publish
 
-A command-line tool for managing Docker image versioning and publishing, converted from TypeScript to Go.
+A command-line tool for managing Docker image versioning and publishing, written in Go.
 
 ## Features
 
@@ -102,20 +102,6 @@ docker-publish
 
 ## Requirements
 
-- Go 1.21 or later
+- Go or later (optional for building from source)
 - Docker (for building and publishing images)
 - Git (optional, for version tracking)
-
-## Differences from TypeScript Version
-
-This Go version provides the same functionality as the original TypeScript/Bun version with the following changes:
-
-- Interactive CLI selection using `gocliselect` library
-- Semantic version validation using the Masterminds semver library
-- Native Go JSON handling
-- Cross-platform binary compilation support
-- Better error handling and validation
-
-## License
-
-Same as the original project.
